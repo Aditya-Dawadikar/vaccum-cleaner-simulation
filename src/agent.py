@@ -70,7 +70,7 @@ class Agent:
         # self.__print_nearby_obstacles__()
         pass
 
-    def __step__(self):
+    def __step__(self, verbose=False):
         temp_current = (self.current_position["x"],self.current_position["y"])
 
         dirty_tiles = []
@@ -108,7 +108,8 @@ class Agent:
         self.environment.grid_descriptor.grid[self.current_position["x"]][self.current_position["y"]] = LOCATION_MARKERS["CLEAN"]
 
         # move to the destination
-        print("moving to:", dest)
+        if verbose:
+            print("moving to:", dest)
         self.current_position["x"] = dest[0]
         self.current_position["y"] = dest[1]
         self.visited_locations.add((self.current_position["x"],self.current_position["y"]))

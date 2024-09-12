@@ -18,7 +18,7 @@ def evaluate_simulation(environment:Environment, agent:Agent)->dict:
     total_obstacles_detected = len(agent.obstacles_detected)
     initial_energy = agent.initial_energy
     current_energy = agent.current_energy
-    total_energy_consumed = initial_energy - current_energy
+    total_energy_consumed = round(initial_energy - current_energy,2)
     percentage_energy_consumed = round(((initial_energy-current_energy)/initial_energy)*100,2)
     percentage_energy_consumed_per_dirty_spot = round((total_energy_consumed/total_dirt_cleaned)*100/initial_energy,2)
     percentage_energy_consumed_per_step = round((total_energy_consumed/total_steps_taken)*100/initial_energy,2)
