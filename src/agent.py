@@ -5,7 +5,7 @@ import random
 from collections import deque
 from src.common import euclidean_distance
 from src.environment import Environment
-from src.constants import (LOCATION_MARKERS,
+from constants import (LOCATION_MARKERS,
                            DIRECTIONS,
                            STRAIGHT_DIRECTIONS,
                            DIAGONAL_DIRECTIONS,

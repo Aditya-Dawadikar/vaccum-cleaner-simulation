@@ -2,7 +2,7 @@
 Module for simulation environment
 """
 import numpy as np
-from src.constants import LOCATION_MARKERS, POPULATION_DENSITY, DIRECTIONS
+from constants import LOCATION_MARKERS, POPULATION_DENSITY, DIRECTIONS
 
 class Grid:
     def __init__(self, x:int = 10, y:int = 10, static_grid = None):
@@ -77,8 +77,8 @@ class Environment:
         # self.__print_grid__()
 
     def __populate_grid__(self):
-        self.obstacles = self.__generate_random_obstacles__(POPULATION_DENSITY["OBSTACLES"])
-        self.dirty_locations = self.__generate_random_dirty_locations__(POPULATION_DENSITY["DIRT"])
+        self.obstacles, self.dirty_locations = self.__generate_random_obstacles_and_dirt__(POPULATION_DENSITY["OBSTACLES"],
+                                                                                           POPULATION_DENSITY["DIRT"])
         self.initial_obstacles = [x for x in self.obstacles]
         self.initial_dirty_locations = [x for x in self.dirty_locations]
 
@@ -106,6 +106,34 @@ class Environment:
                 print(self.grid_descriptor.grid[j][i], end=' ')
             print()
     
+
+    def __generate_random_obstacles_and_dirt__(self, obstacle_density: float = 0.1, dirt_density: float = 0.1):
+        x_max = self.grid_size["x"]
+        y_max = self.grid_size["y"]
+
+        # Generate all possible locations
+        all_locations = [{'x': x, 'y': y} for x in range(x_max) for y in range(y_max)]
+        
+        # Shuffle to randomize locations
+        np.random.shuffle(all_locations)
+        
+        total_locations = len(all_locations)
+        
+        # Calculate counts for obstacles and dirt
+        max_obstacles = int(total_locations * obstacle_density)
+        max_dirt = int(total_locations * dirt_density)
+        
+        # Select locations for obstacles
+        obstacle_locations = all_locations[:max_obstacles]
+        
+        # Remove obstacle locations from all_locations
+        remaining_locations = all_locations[max_obstacles:]
+        
+        # Select locations for dirt
+        dirt_locations = remaining_locations[:max_dirt]
+        
+        return obstacle_locations, dirt_locations
+
     def __generate_random_obstacles__(self,
                                       obstacle_density: float = 0.1):
 

@@ -1,11 +1,14 @@
 """
 Constants
 """
+import os
+
+BASE_PATH = os.getenv('BASE_PATH')
 
 IDLE_LIMIT = 100
 
 POPULATION_DENSITY = {
-    "OBSTACLES": 0.7,
+    "OBSTACLES": 0.15,
     "DIRT": 0.3
 }
 
