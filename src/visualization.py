@@ -133,6 +133,8 @@ def metrics_correlation(df):
     correlation_matrix = numeric_df.corr()
     sns.heatmap(correlation_matrix, annot=True, cmap="coolwarm")
     plt.title("Correlation Between Performance Metrics")
+    plt.xticks(rotation=45)
+    plt.yticks(rotation=45)
     plt.show()
 
 def energy_consumption_per_empty_spot(df):

@@ -34,8 +34,7 @@ def run_simulation(simulation_name:str=None,
     environ.__populate_grid__()
 
     agent = Agent(environment=environ,
-                  sensor_range=3,
-                  initial_position={"x":3,"y":3},
+                  initial_position={"x":0,"y":0},
                   initial_energy=INITIAL_ENERGY)
 
     if verbose:
