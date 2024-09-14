@@ -10,8 +10,7 @@ from src.visualization import (plot_energy_expenditure_per_step,
 
 def exec_runner(verbose:bool=False,
                 export_gif:bool=False)->pd.DataFrame:
-    sim_name = f"""sim_{1}"""
-    sim_name, performance, meta_data = run_simulation(simulation_name=sim_name,verbose=verbose, export_gif = export_gif)
+    sim_name, performance, meta_data = run_simulation(verbose=verbose, export_gif = export_gif)
     
     print(f"""Simulation {sim_name} completed in {meta_data["time_elapsed"]}s""")
  
