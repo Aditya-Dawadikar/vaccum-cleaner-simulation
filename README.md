@@ -54,25 +54,7 @@ To run the simulation, you need to have Python and the required packages install
 
     main.py
     ~~~
-    data_df = exec_runner(iterations=10, verbose=True)
-    ~~~
-
-3. **Visualizing**
-    main.py
-    ~~~
-    data_df = exec_runner(iterations=10)
-
-    dirt_clean_percentage(data_df)
-    energy_consumption_vs_dirt_cleaned(data_df)
-    efficiency_and_energy_consumption_per_step(data_df)
-    metrics_correlation(data_df)
-    energy_consumption_per_empty_spot(data_df)
-    ~~~
-
-4. **Animation**
-    main.py
-    ~~~
-    data_df = exec_runner(iterations=10, verbose=True, export_gif=True)
+    data_df = exec_runner(verbose=True)
     ~~~
 
 ## Sample Visualizations
