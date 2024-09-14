@@ -14,7 +14,6 @@ from constants import (LOCATION_MARKERS,
 class Agent:
     def __init__(self,
                  environment: Environment,
-                 sensor_range: int = 1,
                  initial_position: dict = {"x":0,"y":0},
                  initial_energy: int =  1000):
         # environment
@@ -45,6 +44,16 @@ class Agent:
         #energy
         self.initial_energy = initial_energy
         self.current_energy = initial_energy
+
+        self.moves_made = []
+        self.step_energy_expense = []
+        self.battery_left = []
+
+        # track steps until dirt cleaned
+        self.steps_to_clean = []
+        self.current_steps_to_clean = 0
+
+        self.cleaned_dirt_spots = set()
 
     def __step__(self, verbose=False):
         temp_current = (self.current_position["x"],self.current_position["y"])
@@ -102,6 +111,7 @@ class Agent:
             print("moving to:", dest)
         self.current_position["x"] = dest[0]
         self.current_position["y"] = dest[1]
+        self.moves_made.append(dest)
         self.visited_locations.add((self.current_position["x"],self.current_position["y"]))
         self.path_followed.append((self.current_position["x"],self.current_position["y"]))
 
@@ -123,9 +133,22 @@ class Agent:
 
         step_energy = movement_energy + scan_energy + cleaning_energy
 
+        self.step_energy_expense.append(round(step_energy,2))
+
         if self.current_energy - step_energy <= 0:
             self.current_energy = 0
         else:
             self.current_energy -= step_energy
+
+        self.battery_left.append(round(self.current_energy,2))
+
+        # Track the steps taken until dirt is cleaned
+        if dirt_found:
+            cleaned_location = (self.current_position["x"], self.current_position["y"])
+            self.cleaned_dirt_spots.add(cleaned_location)
+            self.steps_to_clean.append(self.current_steps_to_clean)
+            self.current_steps_to_clean = 0
+        else:
+            self.current_steps_to_clean +=1
 
         return dirt_found

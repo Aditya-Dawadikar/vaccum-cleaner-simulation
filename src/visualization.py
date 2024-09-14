@@ -99,49 +99,64 @@ def create_gif(image_folder, gif_folder,gif_filename):
     if images:
         images[0].save(f"""{gif_folder}/{gif_filename}""", save_all=True, append_images=images[1:], duration=500, loop=0)
 
-def dirt_clean_percentage(df):
-    plt.figure(figsize=(10, 6))
-    sns.barplot(x="simulation_name", y="percentage_dirt_cleaned", data=df)
-    plt.xticks(rotation=45)
-    plt.title("Percentage of Dirt Cleaned per Simulation")
-    plt.ylabel("Percentage of Dirt Cleaned")
-    plt.xlabel("Simulation Name")
-    plt.show()
-
-def energy_consumption_vs_dirt_cleaned(df):
-    plt.figure(figsize=(10, 6))
-    sns.lineplot(x="percentage_dirt_cleaned", y="total_energy_consumed", hue="simulation_name", data=df, marker='o')
-    plt.title("Energy Consumed vs Dirt Cleaned")
-    plt.xlabel("Percentage of Dirt Cleaned")
-    plt.ylabel("Total Energy Consumed")
-    plt.show()
-
-def efficiency_and_energy_consumption_per_step(df):
-    plt.figure(figsize=(10, 6))
-    sns.scatterplot(x="coverage_efficiency", y="percentage_energy_consumed_per_step", hue="simulation_name", data=df, s=100)
-    plt.title("Coverage Efficiency vs Energy Consumed per Step")
-    plt.xlabel("Coverage Efficiency")
-    plt.ylabel("Percentage Energy Consumed per Step")
-    plt.show()
-
-def metrics_correlation(df):
-    # Drop non-numeric columns, such as 'simulation_name'
-    numeric_df = df.drop(columns=['simulation_name'])
+def plot_energy_expenditure_per_step(energy_expenditure):
+    time = list(range(len(energy_expenditure)))  # Generate time based on the array length
+    avg_energy = sum(energy_expenditure) / len(energy_expenditure)  # Calculate average energy expenditure
     
-    # Plot the correlation matrix for only the numeric columns
-    plt.figure(figsize=(10, 6))
-    correlation_matrix = numeric_df.corr()
-    sns.heatmap(correlation_matrix, annot=True, cmap="coolwarm")
-    plt.title("Correlation Between Performance Metrics")
-    plt.xticks(rotation=45)
-    plt.yticks(rotation=45)
+    plt.figure()
+    plt.plot(time, energy_expenditure, 'g-', label='Energy Expenditure')
+    
+    # Plot the average line
+    plt.axhline(y=avg_energy, color='r', linestyle='--', label=f'Average: {avg_energy:.2f}')
+    
+    plt.xlabel('Time (Index)')
+    plt.ylabel('Energy Expenditure')
+    plt.title('Energy Expenditure Per Step')
+    plt.ylim(ymin=0)  # Set the minimum y value to 0
+    plt.grid(True)
+    plt.legend()  # Add legend for better clarity
     plt.show()
 
-def energy_consumption_per_empty_spot(df):
-    df.boxplot(column='percentage_energy_consumed_per_dirty_spot', by='simulation_name', grid=False)
-    plt.title('Energy Consumption per Dirty Spot Across Simulations')
-    plt.suptitle('')  # Removes default subtitle
-    plt.xlabel('Simulation Name')
-    plt.ylabel('Energy Consumed per Dirty Spot')
-    plt.xticks(rotation=12)
+def plot_battery_usage(battery_usage):
+    time = list(range(len(battery_usage)))  # Generate time based on the array length
+    plt.figure()
+    plt.plot(time, battery_usage, 'b-', label='Battery Usage')
+    plt.xlabel('Time (Index)')
+    plt.ylabel('Battery Usage')
+    plt.ylim(ymin=0)
+    plt.title('Battery Usage Over Time')
+    plt.grid(True)
+    plt.show()
+
+def plot_steps_to_clean(steps_to_clean):
+    plt.figure()
+    plt.plot(range(len(steps_to_clean)), steps_to_clean, linestyle='-', color='b')  # Removed 'marker'
+    plt.xlabel('Dirt Spot Index')
+    plt.ylabel('Steps to Clean')
+    plt.title('Steps Taken to Clean Each Dirt Spot')
+    
+    # Automatically adjust x-tick frequency based on number of dirt spots
+    num_spots = len(steps_to_clean)
+    tick_frequency = max(1, num_spots // 10)  # Show at least 10 ticks
+
+    plt.xticks(ticks=range(0, num_spots, tick_frequency))  # Adjust x-ticks
+
+    plt.grid(True)
+    plt.show()
+
+def plot_dirt_spots_left(dirt_spots_left):
+    plt.figure()
+    plt.plot(range(len(dirt_spots_left)), dirt_spots_left, linestyle='-', color='r')  # Line graph
+    plt.xlabel('Time (Iteration)')
+    plt.ylabel('Dirt Spots Left')
+    plt.ylim(ymin=0)
+    plt.title('Number of Dirt Spots Left Over Time')
+    
+    # Automatically adjust x-tick frequency based on number of iterations
+    num_iterations = len(dirt_spots_left)
+    tick_frequency = max(1, num_iterations // 10)  # Show at least 10 ticks
+
+    plt.xticks(ticks=range(0, num_iterations, tick_frequency))  # Adjust x-ticks
+
+    plt.grid(True)
     plt.show()

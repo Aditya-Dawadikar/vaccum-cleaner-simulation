@@ -8,7 +8,12 @@ from src.environment import Environment
 from src.agent import Agent
 from src.metrics import evaluate_simulation
 from src.visualization import plot_grid, create_gif
-from constants import BASE_PATH, IDLE_LIMIT,INITIAL_ENERGY, TERMINATION_CODE
+from constants import (BASE_PATH,
+                       IDLE_LIMIT,
+                       INITIAL_ENERGY,
+                       TERMINATION_CODE,
+                       GRID_WIDTH,
+                       GRID_HEIGHT)
 
 def run_simulation(simulation_name:str=None,
                    verbose:bool=False,
@@ -30,12 +35,16 @@ def run_simulation(simulation_name:str=None,
     start_time = time.time()
 
     environ = Environment()
-    environ.__generate_environment__()
+    environ.__generate_environment__(grid_size={"x":GRID_WIDTH,"y":GRID_HEIGHT})
     environ.__populate_grid__()
 
     agent = Agent(environment=environ,
                   initial_position={"x":0,"y":0},
                   initial_energy=INITIAL_ENERGY)
+
+    # List to track number of dirt spots left
+    total_dirt_spots = len(environ.dirty_locations)
+    dirt_spots_left = []
 
     if verbose:
         print("------------------------------------")
@@ -51,6 +60,10 @@ def run_simulation(simulation_name:str=None,
     termination_code = -1
 
     while True:
+        cleaned_count = len(agent.cleaned_dirt_spots)
+        remaining_dirt_spots = total_dirt_spots - cleaned_count
+        dirt_spots_left.append(remaining_dirt_spots)
+
         if environ.__is_grid_clean__()==True:
             if verbose:
                 print("===================================")
@@ -113,8 +126,8 @@ def run_simulation(simulation_name:str=None,
     performance_evaluation = evaluate_simulation(environment=environ,
                                                     agent=agent)
     
-    if verbose:
-        print("TERMINATION CODE:", termination_code)
+    # if verbose:
+    print("TERMINATION CODE:", termination_code)
 
     end_time = time.time()
     time_elapsed = end_time - start_time
@@ -129,7 +142,12 @@ def run_simulation(simulation_name:str=None,
         "termination_code": termination_code,
         "start_time": start_time,
         "end_time": end_time,
-        "time_elapsed": time_elapsed
+        "time_elapsed": time_elapsed,
+        "moves_made": agent.moves_made,
+        "step_energy_expenditure": agent.step_energy_expense,
+        "battery_usage": agent.battery_left,
+        "steps_to_clean": agent.steps_to_clean,
+        "dirt_spots_left": dirt_spots_left
     }
 
     return simulation_name, performance_evaluation, meta_data

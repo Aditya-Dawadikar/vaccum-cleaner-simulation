@@ -131,7 +131,7 @@ class Environment:
         
         # Select locations for dirt
         dirt_locations = remaining_locations[:max_dirt]
-        
+
         return obstacle_locations, dirt_locations
 
     def __generate_random_obstacles__(self,
