@@ -67,6 +67,14 @@ To run the simulation, you need to have Python and the required packages install
     | GRID_WIDTH     | Width of the environment                                                                                                               | eg: 30    |
     | GRID_HEIGHT    | Height of the environment                                                                                                              | eg: 30    |
 
+## **Output**
+### Simulation Logs
+![img](https://github.com/Aditya-Dawadikar/vaccum-cleaner-simulation/blob/single-simulation-runner/views/simulation_logs.png)
+### Agent's Moves
+![img](https://github.com/Aditya-Dawadikar/vaccum-cleaner-simulation/blob/single-simulation-runner/views/agent_moves.png)
+### Performance
+![img](https://github.com/Aditya-Dawadikar/vaccum-cleaner-simulation/blob/single-simulation-runner/views/agent_preformance.png)
+
 ## Sample Visualizations
 
 ### Agent Movement Animation
