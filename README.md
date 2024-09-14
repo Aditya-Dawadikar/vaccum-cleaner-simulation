@@ -50,21 +50,35 @@ To run the simulation, you need to have Python and the required packages install
 
     `python3 main.py`
 
-2. **Generating Console based Logs**
+2. **Controlling Environment**
 
-    main.py
-    ~~~
-    data_df = exec_runner(verbose=True)
-    ~~~
+    Edit the following Variables in the `constants.py`
+    
+    | **Variable**   | **Description**                                                                                                                        | **Value** |
+    |----------------|----------------------------------------------------------------------------------------------------------------------------------------|-----------|
+    | OBSTACLES      | The density of obstacles. Expected value 0 to 1                                                                                        | eg: 0.15  |
+    | DIRT           | The density of dirt. Expected value 0 to 1                                                                                             | eg: 0.3   |
+    | INITIAL_ENERGY | Amount of Energy the Agents has as the beginning of the simulation                                                                     | eg: 2000  |
+    | IDLE_LIMIT     | Number of steps for which the Agent can navigate without detecting dirt. Simulation ends when agent is idle for longer than this value | eg: 20    |
+    | MOVE_STRAIGHT  | Energy requirements for moving straight                                                                                                | eg: 1     |
+    | MOVE_DIAGONAL  | Energy requiremnts for moving diagonally                                                                                               | eg: 1.5   |
+    | SCAN           | Energy requirements for scanning surrounding                                                                                           | eg: 2     |
+    | CLEAN          | Energy requirements for cleaning a spot                                                                                                | eg: 5     |
+    | GRID_WIDTH     | Width of the environment                                                                                                               | eg: 30    |
+    | GRID_HEIGHT    | Height of the environment                                                                                                              | eg: 30    |
 
 ## Sample Visualizations
 
 ### Agent Movement Animation
-### Percentage of Dirt Cleaned Per Simulation
-### Energy Consumption Vs Dirt Cleaned
-### Efficiency and Energy Consumption per step
-### Metrics Correlation
-### Energy Consumption per Empty Spot
+![img](https://github.com/Aditya-Dawadikar/vaccum-cleaner-simulation/blob/single-simulation-runner/views/simulation_2024-09-14_01-35-33-140.gif)
+### Battery Usage over Time
+![img](https://github.com/Aditya-Dawadikar/vaccum-cleaner-simulation/blob/single-simulation-runner/views/battery_usage_over_time.png)
+### Energy Expenditure Per Step
+![img](https://github.com/Aditya-Dawadikar/vaccum-cleaner-simulation/blob/single-simulation-runner/views/energy_expenditure_per_step.png)
+### Steps taken to clean each dirt spot
+![img](https://github.com/Aditya-Dawadikar/vaccum-cleaner-simulation/blob/single-simulation-runner/views/steps_taken_to_clean_each_dirt_spot.png)
+### Number of dirt spots left over time
+![img](https://github.com/Aditya-Dawadikar/vaccum-cleaner-simulation/blob/single-simulation-runner/views/number_of_dirt_spots_left_over_time.png)
 
 ## Development
 
